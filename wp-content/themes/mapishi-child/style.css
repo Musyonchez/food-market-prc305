@@ -1,0 +1,93 @@
+/*
+Theme Name:   Mapishi Child
+Description:  Child theme of Astra for the food marketplace (PRC 305 project). Branding, cook name on dish cards, WhatsApp order button.
+Author:       Project author
+Template:     astra
+Version:      1.0.0
+Text Domain:  mapishi-child
+*/
+
+:root {
+  --mk-primary: #E4572E;
+  --mk-secondary: #2E7D32;
+  --mk-accent: #F2A900;
+  --mk-bg: #FFF8F0;
+  --mk-text: #2B2B2B;
+}
+
+body {
+  background: var(--mk-bg);
+  color: var(--mk-text);
+}
+
+a { color: var(--mk-primary); }
+
+.button,
+.wp-block-button__link,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce #respond input#submit {
+  background: var(--mk-primary);
+  color: #fff;
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 0.7em 1.4em;
+  font-weight: 600;
+}
+
+.button:hover,
+.wp-block-button__link:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover {
+  background: #c9441f;
+  color: #fff;
+}
+
+/* Dish cards */
+.woocommerce ul.products li.product {
+  background: #fff;
+  border-radius: 14px;
+  padding: 0.8em;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.woocommerce ul.products li.product img {
+  border-radius: 10px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.woocommerce ul.products li.product .price {
+  color: var(--mk-secondary);
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+/* "By <cook>" line */
+.mk-cook-name {
+  display: block;
+  margin: 0.2em 0 0.4em;
+  font-size: 0.9em;
+  color: var(--mk-text);
+  opacity: 0.8;
+}
+
+.mk-cook-name a { font-weight: 600; }
+
+/* WhatsApp order button */
+.mk-whatsapp {
+  display: inline-block;
+  margin-top: 0.8em;
+  background: #25D366;
+  color: #fff !important;
+  border-radius: 999px;
+  padding: 0.7em 1.4em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mk-whatsapp:hover { background: #1ebe5b; }
+
+@media (max-width: 544px) {
+  body { font-size: 16px; }
+}
