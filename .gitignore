@@ -5,6 +5,8 @@ wp-config.php
 wp-content/uploads/
 wp-content/cache/
 wp-content/plugins/*
+!wp-content/plugins/mk-seed/
 wp-content/themes/*
 !wp-content/themes/mapishi-child/
 misscelenious/
+dist/
