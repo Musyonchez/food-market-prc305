@@ -87,3 +87,124 @@ add_action( 'woocommerce_single_product_summary', function () {
  * Format prices as "KSh 350" with no decimals.
  */
 add_filter( 'woocommerce_price_trim_zeros', '__return_true' );
+
+/**
+ * Brand fonts (Google Fonts) and favicon.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	wp_enqueue_style(
+		'mapishi-fonts',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap',
+		array(),
+		null
+	);
+} );
+
+add_action( 'wp_head', function () {
+	if ( has_site_icon() ) {
+		return;
+	}
+	printf( '<link rel="icon" type="image/svg+xml" href="%s">' . "\n", esc_url( get_stylesheet_directory_uri() . '/assets/favicon.svg' ) );
+} );
+
+/**
+ * Branded placeholder for dishes that have no photo yet.
+ */
+add_filter( 'woocommerce_placeholder_img_src', function () {
+	return get_stylesheet_directory_uri() . '/assets/placeholder.svg';
+} );
+
+/**
+ * Logo in the header when no logo is uploaded in the Customizer.
+ */
+add_filter( 'get_custom_logo', function ( $html ) {
+	if ( $html ) {
+		return $html;
+	}
+	return sprintf(
+		'<a class="mk-logo" href="%s" rel="home"><img src="%s" alt="%s" width="190" height="43"></a>',
+		esc_url( home_url( '/' ) ),
+		esc_url( get_stylesheet_directory_uri() . '/assets/logo.svg' ),
+		esc_attr( get_bloginfo( 'name' ) )
+	);
+} );
+
+/**
+ * Customizer section "Mapishi Contact and Social": the client's connection points.
+ * Appearance > Customize > Mapishi Contact and Social.
+ */
+function mk_contact_fields() {
+	return array(
+		'mk_email'     => array( 'Contact email', 'sanitize_email' ),
+		'mk_phone'     => array( 'Phone (e.g. 0712 345 678)', 'sanitize_text_field' ),
+		'mk_whatsapp'  => array( 'WhatsApp number, international (e.g. 254712345678)', 'sanitize_text_field' ),
+		'mk_facebook'  => array( 'Facebook page URL', 'esc_url_raw' ),
+		'mk_instagram' => array( 'Instagram profile URL', 'esc_url_raw' ),
+		'mk_youtube'   => array( 'YouTube channel URL', 'esc_url_raw' ),
+		'mk_tiktok'    => array( 'TikTok profile URL', 'esc_url_raw' ),
+		'mk_x'         => array( 'X (Twitter) profile URL', 'esc_url_raw' ),
+	);
+}
+
+add_action( 'customize_register', function ( $wp_customize ) {
+	$wp_customize->add_section( 'mk_contact', array(
+		'title'    => 'Mapishi Contact and Social',
+		'priority' => 30,
+	) );
+	foreach ( mk_contact_fields() as $key => $f ) {
+		$wp_customize->add_setting( $key, array(
+			'default'           => '',
+			'sanitize_callback' => $f[1],
+		) );
+		$wp_customize->add_control( $key, array(
+			'section' => 'mk_contact',
+			'label'   => $f[0],
+			'type'    => 'text',
+		) );
+	}
+} );
+
+/**
+ * [mk_contact_details] shortcode for the Contact page.
+ */
+add_shortcode( 'mk_contact_details', function () {
+	$out  = '<ul class="mk-contact-list">';
+	$mail = get_theme_mod( 'mk_email' );
+	$tel  = get_theme_mod( 'mk_phone' );
+	$wa   = preg_replace( '/\D+/', '', (string) get_theme_mod( 'mk_whatsapp' ) );
+	if ( $mail ) {
+		$out .= '<li><strong>Email:</strong> <a href="mailto:' . esc_attr( $mail ) . '">' . esc_html( $mail ) . '</a></li>';
+	}
+	if ( $tel ) {
+		$out .= '<li><strong>Phone:</strong> <a href="tel:' . esc_attr( preg_replace( '/\s+/', '', $tel ) ) . '">' . esc_html( $tel ) . '</a></li>';
+	}
+	if ( $wa ) {
+		$out .= '<li><strong>WhatsApp:</strong> <a href="https://wa.me/' . esc_attr( $wa ) . '" target="_blank" rel="noopener">Chat with us</a></li>';
+	}
+	$out .= '<li><strong>Area:</strong> Nairobi</li><li><strong>Hours:</strong> Mon-Sat, 8am-8pm</li></ul>';
+	return $out;
+} );
+
+/**
+ * Social strip above the footer. Only networks with a URL are shown.
+ */
+add_action( 'wp_footer', function () {
+	$nets = array(
+		'mk_facebook'  => 'Facebook',
+		'mk_instagram' => 'Instagram',
+		'mk_youtube'   => 'YouTube',
+		'mk_tiktok'    => 'TikTok',
+		'mk_x'         => 'X',
+	);
+	$links = '';
+	foreach ( $nets as $key => $label ) {
+		$url = get_theme_mod( $key );
+		if ( $url ) {
+			$links .= sprintf( '<a href="%s" target="_blank" rel="noopener" aria-label="%s">%s</a>', esc_url( $url ), esc_attr( $label ), esc_html( $label ) );
+		}
+	}
+	if ( ! $links ) {
+		return;
+	}
+	echo '<div class="mk-social"><span>Follow us</span>' . $links . '</div>';
+} );

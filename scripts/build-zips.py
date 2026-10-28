@@ -1,17 +1,30 @@
-import zipfile, os, sys
-root = r"C:\Users\Admin\Code\johnson"
-def build(out, name, files):
-    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+"""Build the two install zips into releases/. Run: python -I scripts/build-zips.py"""
+import os
+import zipfile
+
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+out_dir = os.path.join(root, "releases")
+os.makedirs(out_dir, exist_ok=True)
+
+
+def walk(base):
+    for folder, _, names in os.walk(base):
+        for n in names:
+            src = os.path.join(folder, n)
+            yield src, os.path.relpath(src, base).replace(os.sep, "/")
+
+
+def build(name, files):
+    path = os.path.join(out_dir, name + ".zip")
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
         for src, arc in files:
             z.write(src, f"{name}/{arc}")
+    with zipfile.ZipFile(path) as z:
+        assert z.testzip() is None
+        print(name, z.namelist())
+
+
 theme = os.path.join(root, "wp-content", "themes", "mapishi-child")
 plug = os.path.join(root, "wp-content", "plugins", "mk-seed")
-os.makedirs(os.path.join(root, "dist"), exist_ok=True)
-build(os.path.join(root, "dist", "mapishi-child.zip"), "mapishi-child",
-      [(os.path.join(theme, f), f) for f in ("style.css", "functions.php")])
-build(os.path.join(root, "dist", "mk-seed.zip"), "mk-seed",
-      [(os.path.join(plug, "mk-seed.php"), "mk-seed.php"), (os.path.join(plug, "seed.php"), "seed.php"),
-       (os.path.join(root, "exports", "sample-products.csv"), "exports/sample-products.csv")])
-for n in ("mapishi-child", "mk-seed"):
-    with zipfile.ZipFile(os.path.join(root, "dist", n + ".zip")) as z:
-        print(n, z.testzip(), z.namelist())
+build("mapishi-child", list(walk(theme)))
+build("mk-seed", list(walk(plug)) + [(os.path.join(root, "exports", "sample-products.csv"), "exports/sample-products.csv")])

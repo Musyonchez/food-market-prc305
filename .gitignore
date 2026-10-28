@@ -9,4 +9,3 @@ wp-content/plugins/*
 wp-content/themes/*
 !wp-content/themes/mapishi-child/
 misscelenious/
-dist/

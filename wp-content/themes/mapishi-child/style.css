@@ -88,6 +88,30 @@ a { color: var(--mk-primary); }
 
 .mk-whatsapp:hover { background: #1ebe5b; }
 
+/* Typography */
+body { font-family: 'Inter', system-ui, sans-serif; }
+h1, h2, h3, h4, .site-title, .woocommerce-loop-product__title { font-family: 'Poppins', system-ui, sans-serif; }
+
+/* Logo */
+.mk-logo img { display: block; max-width: 190px; height: auto; }
+
+/* Home hero */
+.wp-block-cover { border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, var(--mk-primary), var(--mk-accent)); }
+.wp-block-cover .wp-block-cover__background { opacity: 0.1 !important; }
+.wp-block-cover h1, .wp-block-cover p { color: #fff; }
+.wp-block-cover .wp-block-button__link { background: #fff; color: var(--mk-primary); }
+
+/* Category tiles */
+.woocommerce ul.products li.product-category { text-align: center; }
+.woocommerce ul.products li.product-category a img { border-radius: 14px; }
+.woocommerce-loop-category__title { font-size: 1em; }
+
+/* Contact list and social strip */
+.mk-contact-list { list-style: none; padding: 0; }
+.mk-contact-list li { margin: 0.4em 0; }
+.mk-social { display: flex; flex-wrap: wrap; gap: 1em; justify-content: center; align-items: center; padding: 1em; background: var(--mk-secondary); color: #fff; }
+.mk-social a { color: #fff; font-weight: 600; text-decoration: underline; }
+
 @media (max-width: 544px) {
   body { font-size: 16px; }
 }

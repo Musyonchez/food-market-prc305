@@ -57,7 +57,7 @@ foreach ( $cooks as $name => $c ) {
 	if ( ! $u ) {
 		$uid = wp_insert_user( array(
 			'user_login'   => $c['login'],
-			'user_pass'    => 'password123',
+			'user_pass'    => wp_generate_password( 20 ),
 			'user_email'   => $c['login'] . '@example.com',
 			'display_name' => $name,
 			'first_name'   => explode( ' ', $name )[0],
@@ -170,7 +170,7 @@ $contact = '
 <!-- wp:heading --><h2 class="wp-block-heading">Talk to us</h2><!-- /wp:heading -->
 <!-- wp:paragraph --><p>Questions about an order, want to become a cook, or have a partnership idea? Send us a message and we will reply within one working day.</p><!-- /wp:paragraph -->
 [CONTACT_FORM]
-<!-- wp:paragraph --><p><strong>Area:</strong> Nairobi<br><strong>Hours:</strong> Mon-Sat, 8am-8pm</p><!-- /wp:paragraph -->';
+<!-- wp:shortcode -->[mk_contact_details]<!-- /wp:shortcode -->';
 
 $gallery = '<!-- wp:paragraph --><p>A taste of what our cooks make. Photos coming soon.</p><!-- /wp:paragraph -->';
 

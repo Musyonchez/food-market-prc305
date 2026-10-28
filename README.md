@@ -9,6 +9,9 @@ Built with WordPress + WooCommerce + Dokan, hosted on InfinityFree. Daystar Univ
 - **Demo data:** `exports/sample-products.csv`
 - **Page copy:** `content/page-copy.md`
 
+## Set it up yourself
+Follow [docs/17-client-setup-guide.md](docs/17-client-setup-guide.md) (beginner friendly). The two install files are in `releases/`.
+
 ## Reproduce
 See `docs/16-local-build-workflow.md`.
 
