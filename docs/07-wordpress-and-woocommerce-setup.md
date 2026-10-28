@@ -19,7 +19,7 @@ Starter templates are optional. If you use one, pick a **food/restaurant** templ
 |---|---|
 | WooCommerce | Store engine (run the setup wizard) |
 | Dokan Lite | Multi-vendor (doc 08) |
-| Contact Form 7 or WPForms Lite | Contact form |
+| WPForms Lite (Contact Form 7 failed to install via WP-CLI) | Contact form |
 | WP Mail SMTP | Reliable email |
 | Smush | Image compression |
 | WP Super Cache | Caching |

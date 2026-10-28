@@ -39,3 +39,8 @@ Make small content edits directly on live. Make structural changes locally, re-e
 - Keep the plugin list identical in local and live.
 - Compress images before upload (about 200 KB each).
 - Commit to GitHub after every milestone (doc 13).
+
+## Status log
+- **28 Oct 2026:** LocalWP site `food-market` created (PHP 8.2, MySQL 8.4). WP-CLI wrapper used from the terminal. Installed Astra, WooCommerce, Dokan Lite, WPForms Lite, WP Mail SMTP, Smush, WP Super Cache, All-in-One WP Migration. Seeded with `scripts/setup-local.php`: 5 cooks, 16 dishes, pages, menus, contact form, 3 blog posts. Store URLs are `/cook/<kitchen>/`.
+- Local admin and demo cooks use a throwaway password for local testing only. Use strong, different passwords on the live site.
+- Still to do: food photos, logo, social links, SMTP config, responsive checks, export and deploy.
